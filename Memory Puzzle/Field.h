@@ -29,6 +29,8 @@ private:
 
 public:
 	void CreateField();
+	void OpenField();
+	void CloseField();
 	void ShowField();
 	void MovePtr(Direction dir);
 	bool OpenPlate();

@@ -5,6 +5,8 @@
 #include<Windows.h>
 #include<conio.h>
 #include"Field.h"
+#include<thread>
+#include<chrono>
 
 int Random(int min, int max);
 

@@ -14,6 +14,9 @@ int main() {
 	Field f;
 	f.CreateField();
 	f.ShowField();
+	f.OpenField();
+	this_thread::sleep_for(chrono::milliseconds(5000));
+	f.CloseField();
 
 	while (programm_run) {
 

@@ -26,6 +26,21 @@ void Field::CreateField()
 
 }
 
+void Field::OpenField()
+{
+	for (_x = 0; _x < width; _x++)
+		for (_y = 0; _y < height; _y++)
+			OpenPlate();
+	_x = _y = 0;
+}
+
+void Field::CloseField()
+{
+	for (int i = 0; i < width; i++)
+		for (int j = 0; j < height; j++)
+			ClosePlate(i, j);
+}
+
 void Field::ShowField()
 {
 	for (int k = 0; k < 29; k++) {
@@ -270,5 +285,16 @@ bool Field::OpenPlate()
 		}
 		return true;
 	}
+	return false;
+}
+
+bool Field::ClosePlate(int x, int y)
+{
+	if (plates[x][y].is_open()) {
+		plates[x][y].FlipOver();
+		DrawPlate(x, y, BG_GRAY);
+		return true;
+	}
+
 	return false;
 }
