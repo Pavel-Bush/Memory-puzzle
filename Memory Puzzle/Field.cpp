@@ -44,9 +44,7 @@ void Field::ShowField()
 		for (int j = 0; j < height; j++) 
 			DrawPlate(i, j);
 
-	SetColor(BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-	DrawPlate(_x, _y);
-	SetColor();
+	DrawPlate(_x, _y, BG_WHITE);
 
 }
 
@@ -64,6 +62,24 @@ void Field::DrawPlate(int x, int y)
 	std::cout << "           ";
 	gotoxy(x * 13 + 3, y * 7 + 6);
 	std::cout << "           ";
+}
+
+void Field::DrawPlate(int x, int y, Color clr)
+{
+	SetColor(clr);
+	gotoxy(x * 13 + 3, y * 7 + 1);
+	std::cout << "           ";
+	gotoxy(x * 13 + 3, y * 7 + 2);
+	std::cout << "           ";
+	gotoxy(x * 13 + 3, y * 7 + 3);
+	std::cout << "           ";
+	gotoxy(x * 13 + 3, y * 7 + 4);
+	std::cout << "           ";
+	gotoxy(x * 13 + 3, y * 7 + 5);
+	std::cout << "           ";
+	gotoxy(x * 13 + 3, y * 7 + 6);
+	std::cout << "           ";
+	SetColor();
 }
 
 void Field::DrawCircle(int x, int y, Color clr)
@@ -140,63 +156,93 @@ void Field::DrawCross(int x, int y, Color clr)
 
 void Field::MovePtr(Direction dir)
 {
-	//TO DO
-	//Исправить проблему перемещения указателя,
-	//если в его строке и столбце не осталось закрытых плиток
 	switch (dir) {
 	case Direction::UP:
-		for (int i = _y - 1; i >= 0; i--) {
-			if (!plates[_x][i].is_open()) {
-				SetColor(BACKGROUND_INTENSITY );
-				if(!plates[_x][_y].is_open())//если текщая плитка открыта, то ее не закрашивать 
-				DrawPlate(_x, _y);
-				_y = i;
-				SetColor(BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-				DrawPlate(_x, _y);
-				SetColor();
-				break;
+		for (int j = 0; j <= max(width - _x - 1, _x); j++) {// цикл на случай, если нету доступной плитки в данном столбце
+			for (int i = _y - 1; i >= 0; i--) {
+				if ((_x + j < width) && !plates[_x + j][i].is_open()) {
+					if (!plates[_x][_y].is_open())//если текщая плитка открыта, то ее не закрашивать 
+						DrawPlate(_x, _y, BG_GRAY);
+					_y = i;
+					_x = _x + j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
+				else if ((_x - j >= 0) && !plates[_x - j][i].is_open()) {
+					if (!plates[_x][_y].is_open())//если текщая плитка открыта, то ее не закрашивать 
+						DrawPlate(_x, _y, BG_GRAY);
+					_y = i;
+					_x = _x - j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
 			}
 		}
 		break;
 	case Direction::DOWN:
-		for (int i = _y + 1; i < height; i++) {
-			if (!plates[_x][i].is_open()) {
-				SetColor(BACKGROUND_INTENSITY );
-				if (!plates[_x][_y].is_open())
-				DrawPlate(_x, _y);
-				_y = i;
-				SetColor(BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-				DrawPlate(_x, _y);
-				SetColor();
-				break;
+		for (int j = 0; j <= max(width - _x - 1, _x); j++) {
+			for (int i = _y + 1; i < height; i++) {
+
+				if ((_x + j < width) && !plates[_x + j][i].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_y = i;
+					_x = _x + j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
+				else if ((_x - j >= 0) && !plates[_x - j][i].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_y = i;
+					_x = _x - j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
 			}
 		}
 		break;
 	case Direction::LEFT:
-		for (int i = _x - 1; i >= 0; i--) {
-			if (!plates[i][_y].is_open()) {
-				SetColor(BACKGROUND_INTENSITY );
-				if (!plates[_x][_y].is_open())
-				DrawPlate(_x, _y);
-				_x = i;
-				SetColor(BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-				DrawPlate(_x, _y);
-				SetColor();
-				break;
+		for (int j = 0; j <= max(height - _y - 1, _y); j++){
+			for (int i = _x - 1; i >= 0; i--) {
+				if ((_y + j < height) && !plates[i][_y + j].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_x = i;
+					_y = _y + j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
+				else if ((_y - j >= 0) && !plates[i][_y - j].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_x = i;
+					_y = _y - j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
 			}
 		}
 		break;
 	case Direction::RIGHT:
-		for (int i = _x + 1; i < width; i++) {
-			if (!plates[i][_y].is_open()) {
-				SetColor(BACKGROUND_INTENSITY );
-				if (!plates[_x][_y].is_open())
-				DrawPlate(_x, _y);
-				_x = i;
-				SetColor(BACKGROUND_INTENSITY | BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-				DrawPlate(_x, _y);
-				SetColor();
-				break;
+		for (int j = 0; j <= max(height - _y - 1, _y); j++) {
+			for (int i = _x + 1; i < width; i++) {
+				if ((_y + j < height) && !plates[i][_y + j].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_x = i;
+					_y = _y + j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
+				else if ((_y - j >= 0) && !plates[i][_y - j].is_open()) {
+					if (!plates[_x][_y].is_open())
+						DrawPlate(_x, _y, BG_GRAY);
+					_x = i;
+					_y = _y - j;
+					DrawPlate(_x, _y, BG_WHITE);
+					return;
+				}
 			}
 		}
 		break;

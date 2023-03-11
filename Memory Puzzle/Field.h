@@ -21,6 +21,7 @@ private:
 	int _x = 0, _y = 0;
 
 	void DrawPlate(int x, int y);
+	void DrawPlate(int x, int y, Color clr);
 	void DrawCircle(int x, int y, Color clr);
 	void DrawTriangle(int x, int y, Color clr);
 	void DrawSquare(int x, int y, Color clr);

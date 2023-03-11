@@ -1,7 +1,7 @@
 #pragma once
 
 enum Color {
-	nullclr, RED = 4, BLUE = 1, GREEN = 2, MAGENTA = 5
+	nullclr, RED = 4, BLUE = 1, GREEN = 2, MAGENTA = 5, BG_WHITE = 240, BG_GRAY = 128
 };
 
 enum Shape {
