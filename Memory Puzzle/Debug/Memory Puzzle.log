@@ -1,0 +1,6 @@
+﻿  Field.cpp
+  func.cpp
+  Source.cpp
+C:\Users\mahon\source\repos\Memory Puzzle\Memory Puzzle\Source.cpp(8,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Создание кода...
+  Memory Puzzle.vcxproj -> C:\Users\mahon\source\repos\Memory Puzzle\Debug\Memory Puzzle.exe
