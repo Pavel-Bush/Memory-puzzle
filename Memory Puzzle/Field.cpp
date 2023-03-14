@@ -5,6 +5,23 @@ Color arr_clr[num_clr] = { RED, BLUE, GREEN, MAGENTA };
 const int num_shp = 4;
 Shape arr_shp[num_shp] = { TRIANGLE, CIRCLE, SQUARE, CROSS};
 
+std::pair<int, int> Field::GetPos()
+{
+	return std::pair<int, int>(_x, _y);
+}
+
+bool Field::compair(std::pair<int, int> firstplate, std::pair<int, int> secondplate)
+{
+	if (firstplate.first == secondplate.first && firstplate.second == secondplate.second)
+		return false;
+	return plates[firstplate.first][firstplate.second].GetColor() 
+		== plates[secondplate.first][secondplate.second].GetColor()
+		&& 
+		plates[firstplate.first][firstplate.second].GetShape() 
+		== plates[secondplate.first][secondplate.second].GetShape()
+		;
+}
+
 void Field::CreateField()
 {
 	std::pair<int, int> coord;

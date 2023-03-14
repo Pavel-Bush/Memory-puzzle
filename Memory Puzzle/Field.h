@@ -28,6 +28,8 @@ private:
 	void DrawCross(int x, int y, Color clr);
 
 public:
+	std::pair<int, int> GetPos();
+	bool compair(std::pair<int, int> firstplate, std::pair<int, int> secondplate);
 	void CreateField();
 	void OpenField();
 	void CloseField();
